@@ -1,21 +1,42 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 const About: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>About me</title>
-        <meta name="description" content="About me page" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>About me</h1>
-      </main>
-    </div>
+    <Box
+      sx={{
+        bgcolor: 'background.paper',
+        pt: 8,
+        pb: 6,
+      }}
+    >
+      <Container maxWidth="sm">
+        <Typography
+          component="h1"
+          variant="h2"
+          align="center"
+          color="text.primary"
+          gutterBottom
+        >
+          About me
+        </Typography>
+        <Typography variant="h5" align="center" color="text.secondary" paragraph>
+          Hello, world!
+        </Typography>
+        <Stack
+          sx={{ pt: 4 }}
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+        >
+        </Stack>
+      </Container>
+    </Box>
   )
 }
 

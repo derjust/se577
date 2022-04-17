@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -6,7 +7,11 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-const Repositories: NextPage = () => {
+
+const Repository: NextPage = () => {
+  const router = useRouter()
+  const { repo } = router.query
+
   return (
     <Box
       sx={{
@@ -23,10 +28,10 @@ const Repositories: NextPage = () => {
           color="text.primary"
           gutterBottom
         >
-          Repositories
+          Repository {repo}
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          There will be repositories here
+          Here will be the repository details
         </Typography>
         <Stack
           sx={{ pt: 4 }}
@@ -40,4 +45,4 @@ const Repositories: NextPage = () => {
   )
 }
 
-export default Repositories
+export default Repository
