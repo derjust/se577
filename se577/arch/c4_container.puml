@@ -1,0 +1,35 @@
+@startuml
+
+title Container Diagram
+'Container diagrams (level 2): decompose a system into interrelated containers. A container represents an application or a data store;
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/react.puml
+!include DEVICONS/nodejs.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/github.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Users", "People looking for repository information", $sprite="users")
+System_Boundary(c1, "SE577 System") {
+	Container(spa, "SPA", "Next.js", "The UI the users interact with", $sprite="react")
+	Container(api, "API", "nodejs", "Handles all backend logic", $sprite="nodejs")
+}
+
+System_Boundary(c2, "GitHub") {
+	ContainerDb_Ext(db, "Database", "GraphQL", "Holds repository information", $sprite="github")
+}
+	note left
+		Integration not
+		yet implemented
+	end note
+
+Rel(user, spa, "Uses", "http")
+Rel(spa, api, "Uses", "http")
+Rel_L(api, db, "Reads")
+@enduml

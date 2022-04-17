@@ -1,0 +1,17 @@
+@startuml
+
+title Component Diagram
+'Component diagrams (level 3): decompose containers into interrelated components, and relate the components to other containers or other systems;
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+System_Boundary(c1, "SE577 System") {
+    Container(web_app, "Web Application", "C#, ASP.NET Core 2.1 MVC", "Allows users to compare multiple Twitter timelines")
+}
+System(github, "GitHub")
+
+Rel(user, web_app, "Uses", "HTTPS")
+Rel(web_app, github, "Gets repository information from", "HTTPS")
+
+@enduml
