@@ -3,15 +3,28 @@
 title Component Diagram
 'Component diagrams (level 3): decompose containers into interrelated components, and relate the components to other containers or other systems;
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Person(user, "User")
-System_Boundary(c1, "SE577 System") {
-    Container(web_app, "Web Application", "C#, ASP.NET Core 2.1 MVC", "Allows users to compare multiple Twitter timelines")
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/react.puml
+!include DEVICONS/nodejs.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/github.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Users", "People looking for repository information", $sprite="users")
+Container_Boundary(spa, "SE577 System - SPA") {
+	Component(layout, "SPA", "Next.js", "The UI the users interact with", $sprite="react")
+
 }
-System(github, "GitHub")
 
-Rel(user, web_app, "Uses", "HTTPS")
-Rel(web_app, github, "Gets repository information from", "HTTPS")
 
+
+
+Rel(user, spa, "Uses", "http")
+Rel(spa, api, "Uses", "http")
+Rel_R(api, db, "Reads")
 @enduml

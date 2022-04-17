@@ -24,10 +24,10 @@ System_Boundary(c1, "SE577 System") {
 System_Boundary(c2, "GitHub") {
 	ContainerDb_Ext(db, "Database", "GraphQL", "Holds repository information", $sprite="github")
 }
-	note left
-		Integration not
-		yet implemented
-	end note
+note left
+	Integration not
+	yet implemented
+end note
 
 Rel(user, spa, "Uses", "http")
 Rel(spa, api, "Uses", "http")

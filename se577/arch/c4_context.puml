@@ -3,7 +3,7 @@
 title Context Diagram
 'Context diagrams (level 1): show the system in scope and its relationship with users and other systems;
 
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
 
 !define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
 !define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
@@ -17,7 +17,7 @@ LAYOUT_WITH_LEGEND()
 
 Person(user, "Users", "People looking for repository information", $sprite="users")
 System(c1, "SE577 System", "Provide repository information")
-System_Ext(c2, "GitHub", "Holds repository information", $sprite="github")
+SystemDb_Ext(c2, "GitHub", "Holds repository information", $sprite="github")
 
 note right
 	Integration not
