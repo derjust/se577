@@ -6,8 +6,10 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import RepositoryList from './components/RepoList'
+
 const Repositories: NextPage = () => {
-  return (
+  return (<>
     <Box
       sx={{
         bgcolor: 'background.paper',
@@ -26,17 +28,16 @@ const Repositories: NextPage = () => {
           Repositories
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          There will be repositories here
+          All the repositories:
         </Typography>
-        <Stack
-          sx={{ pt: 4 }}
-          direction="row"
-          spacing={2}
-          justifyContent="center"
-        >
-        </Stack>
       </Container>
     </Box>
+    <Container sx={{ py: 8 }} maxWidth="md">
+
+      <RepositoryList />
+
+    </Container>
+    </>
   )
 }
 

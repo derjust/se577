@@ -28,13 +28,6 @@ const About: NextPage = () => {
         <Typography variant="h5" align="center" color="text.secondary" paragraph>
           Hello, world!
         </Typography>
-        <Stack
-          sx={{ pt: 4 }}
-          direction="row"
-          spacing={2}
-          justifyContent="center"
-        >
-        </Stack>
       </Container>
     </Box>
   )

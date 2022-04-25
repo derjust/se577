@@ -3,7 +3,7 @@
 ## C4-Context
 
 The overall context of the SE577 application is depicted below:
-It shows a future state in which the SE477 system is integrated with GitHub.
+It shows a current state in which the SE477 system is integrated with a YAML file as data store.
 
 ![](./arch/c4_context.png)
 

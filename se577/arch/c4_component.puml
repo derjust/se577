@@ -9,7 +9,7 @@ title Component Diagram
 !define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
 !include DEVICONS/react.puml
 !include DEVICONS/nodejs.puml
-!include DEVICONS/msql_server.puml
+!include FONTAWESOME/file_alt.puml
 !include FONTAWESOME/users.puml
 !include FONTAWESOME/github.puml
 
@@ -17,14 +17,61 @@ LAYOUT_WITH_LEGEND()
 
 Person(user, "Users", "People looking for repository information", $sprite="users")
 Container_Boundary(spa, "SE577 System - SPA") {
-	Component(layout, "SPA", "Next.js", "The UI the users interact with", $sprite="react")
+	Component(routing, "Routing", "Next.js", "Provided by the Framework: Provides routing between views on the client", $sprite="react")
+	Component(layout, "Layout", "./component/Layout.tsx", "Provides basic UI layout", $sprite="react")
+	Component(header, "Header", "./component/Layout.tsx", "Provides the header UI components", $sprite="react")
+	Component(footer, "Footer", "./component/Layout.tsx", "Provides the footer UI components", $sprite="react")
+	Component(loginView, "Login view", "./login.tsx", "Provides basic UI layout", $sprite="react")
+	Component(indexView, "Index View", "./index.tsx", "Login page", $sprite="react")
+	Component(aboutView, "About view", "./about.tsx", "Simple about page", $sprite="react")
+	Component(reposView, "Repositories view", "./repos.tsx", "List of all repositories", $sprite="react")
+	Component(repoListComponent, "Repositories list", "./component/RepoList.tsx", "List of repositories", $sprite="react")
+	Component(repoComponent, "Single Repository Card", "./component/ACard.tsx", "Single repository UI component", $sprite="react")
+	Component(repoView, "Repository view", "./repo/[repo].tsx", "Shows a single repository", $sprite="react")
 
 }
 
+Container_Boundary(nodejs, "SE577 System - API") {
+	Component(loginController, "Login contrtoller", "./login.tsx", "Landing page controller", $sprite="nodejs")
+	Component(indexController, "Index contrtoller", "./index.tsx", "Login page controller", $sprite="nodejs")
+	Component(aboutController, "About contrtoller", "./about.tsx", "About page controller", $sprite="nodejs")
+	Component(reposController, "Repositories contrtoller", "./repos.tsx", "Repositories controller", $sprite="nodejs")
+	Component(repoController, "Repository contrtoller", "./repo/[repo].tsx", "Repository controller", $sprite="nodejs")
+
+	ContainerDb(db, "Database file", "YAML", "Holds mocked repository information", $sprite="file_alt")
+}
 
 
+Rel(user, routing, "Uses", "http")
+Rel(routing, layout, "Uses")
+Rel_R(layout, footer, "Uses")
+Rel_L(layout, header, "Uses")
+Rel(layout, indexView, "Uses")
+Rel(layout, loginView, "Uses")
+Rel(layout, aboutView, "Uses")
+Rel(layout, repoView, "Uses")
+Rel(layout, reposView, "Uses")
+Rel_R(reposView, repoListComponent, "Uses")
+Rel_R(repoListComponent, repoComponent, "Uses")
 
-Rel(user, spa, "Uses", "http")
-Rel(spa, api, "Uses", "http")
-Rel_R(api, db, "Reads")
+Lay_R(indexView, loginView)
+Lay_R(loginView, aboutView)
+Lay_R(aboutView, repoView)
+Lay_R(repoView, reposView)
+
+Rel_U(indexController, indexView, "Provides", "ajax")
+Rel_U(loginController, loginView, "Provides", "ajax")
+Rel_U(aboutController, aboutView, "Provides", "ajax")
+Rel_U(reposController, reposView, "Provides", "ajax")
+Rel_U(repoController, repoView, "Provides", "ajax")
+Rel_D(reposController, db, "Reads")
+Rel_D(repoController, db, "Reads")
+
+
+Lay_R(indexController, loginController)
+Lay_R(loginController, aboutController)
+Lay_R(aboutController, repoController)
+Lay_R(repoController, reposController)
+
+Lay_D(spa, nodejs)
 @enduml

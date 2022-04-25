@@ -9,7 +9,7 @@ title Container Diagram
 !define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
 !include DEVICONS/react.puml
 !include DEVICONS/nodejs.puml
-!include DEVICONS/msql_server.puml
+!include FONTAWESOME/file_alt.puml
 !include FONTAWESOME/users.puml
 !include FONTAWESOME/github.puml
 
@@ -19,17 +19,10 @@ Person(user, "Users", "People looking for repository information", $sprite="user
 System_Boundary(c1, "SE577 System") {
 	Container(spa, "SPA", "Next.js", "The UI the users interact with", $sprite="react")
 	Container(api, "API", "nodejs", "Handles all backend logic", $sprite="nodejs")
+	ContainerDb(db, "Database", "YAML", "Holds repository information", $sprite="file_alt")
 }
-
-System_Boundary(c2, "GitHub") {
-	ContainerDb_Ext(db, "Database", "GraphQL", "Holds repository information", $sprite="github")
-}
-note left
-	Integration not
-	yet implemented
-end note
 
 Rel(user, spa, "Uses", "http")
 Rel(spa, api, "Uses", "http")
-Rel_L(api, db, "Reads")
+Rel_L(db, api, "Reads")
 @enduml

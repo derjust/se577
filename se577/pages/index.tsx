@@ -33,13 +33,6 @@ const Home: NextPage = () => {
             This is a first, mocked version of the webapp.
             All text is static but gives an idea what will be where
           </Typography>
-          <Stack
-            sx={{ pt: 4 }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          >
-          </Stack>
         </Container>
       </Box>
       <Container sx={{ py: 8 }} maxWidth="md">
@@ -48,8 +41,6 @@ const Home: NextPage = () => {
           <ACard title="About me" description="Find in-depth information about me." href="/about" />
 
           <ACard title="Repositories" description="Find a list of all the repositories." href="/repos" />
-
-          <ACard title="Repository example" description="A sample repository." href="/repo/sample" />
 
         </Grid>
       </Container>

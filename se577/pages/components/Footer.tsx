@@ -3,14 +3,8 @@ import Link from "../../src/Link";
 
 import type { NextPage } from 'next';
 
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
 
 function Copyright() {
   return (
