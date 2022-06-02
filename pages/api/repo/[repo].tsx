@@ -4,16 +4,27 @@ import fs from "fs"
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { parse, stringify } from 'yaml'
 
+
 interface RepositoryDetails {
   description: string,
-  teaser: string
+  teaser: string,
+}
+
+interface RepositoryYaml {
+  id: string,
+  description: string,
+  teaser: string,
+}
+
+interface RepositoriesYaml {
+  repositories: Array<RepositoryYaml>,
 }
 
 const repos = loadRepositories();
 
-function loadRepositories() : Map<string, Repository> {
+function loadRepositories() : Map<string, RepositoryDetails> {
   const file = fs.readFileSync('./repos.yml', 'utf8')
-  const yaml = parse(file)
+  const yaml: RepositoriesYaml = parse(file)
 
   console.log(`Loaded ${yaml} repositories`)
 
@@ -28,10 +39,10 @@ export default function handler(
 
   const { repo } = req.query
 
-  if (repos.has(repo)) {
-    res.status(200).json({
-      ...repos.get(repo)
-    });
+  const repoDetails = repos.get(repo);
+
+  if (repoDetails !== undefined) {
+    res.status(200).json(repoDetails);
   } else {
     res.status(404)
   }

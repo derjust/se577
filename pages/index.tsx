@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NextPage } from 'next'
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';

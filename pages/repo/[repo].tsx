@@ -9,13 +9,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import useSWR from 'swr'
-const fetcher = (...args) => fetch(...args).then(res => res.json())
+import fetch from '../../libs/fetch'
+
+interface RepositoryDetails {
+  description: string,
+  teaser: string,
+}
 
 const Repository: NextPage = () => {
   const router = useRouter()
   const { repo } = router.query
 
-  const { data, error } = useSWR(`/api/repo/${repo}`, fetcher)
+  const { data, error } = useSWR<RepositoryDetails>(`/api/repo/${repo}`, fetch)
 
   if (!data) return (<CircularProgress />);
 

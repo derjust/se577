@@ -8,14 +8,29 @@ import Grid from '@mui/material/Grid';
 
 import Typography from '@mui/material/Typography';
 import useSWR from 'swr'
+import fetch from '../../libs/fetch'
+
 
 import ACard from './ACard'
 import Link from "../../src/Link";
 
-const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-const RepositoryList: ReactElement = () => {
-  const { data, error } = useSWR('/api/repos', fetcher)
+interface RepositorySummary {
+  id: string,
+  name: string,
+  teaser: string,
+}
+
+interface RepositoriesSummary {
+  repositories: Array<RepositorySummary>
+}
+
+
+//const fetcher = (...args: any) => fetch(...args).then(res => res.json())
+
+
+const RepositoryList = () : ReactElement => {
+  const {data} = useSWR<RepositoriesSummary>('/api/repos', fetch)
 
   if (!data) return (<CircularProgress />);
 
@@ -23,7 +38,7 @@ const RepositoryList: ReactElement = () => {
   return (
     <Grid container spacing={4}>
     {repos.map((repo) => (
-      <ACard title={repo.name} description={repo.teaser} href={'/repo/' + repo.id} />
+      <ACard key={repo.id} title={repo.name} description={repo.teaser} href={'/repo/' + repo.id} />
     ))}
     </Grid>
   );

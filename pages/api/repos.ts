@@ -4,20 +4,20 @@ import fs from "fs"
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { parse, stringify } from 'yaml'
 
-interface Repository {
+interface RepositorySummary {
   id: string,
   description: string,
 }
 
-interface Data {
-  repositories: List<Repository>
+interface RepositoriesSummary {
+  repositories: Array<RepositorySummary>
 }
 
 const repos = loadRepositories();
 
-function loadRepositories() : Repositories[] {
+function loadRepositories() : RepositorySummary[] {
   const file = fs.readFileSync('./repos.yml', 'utf8')
-  const yaml = parse(file)
+  const yaml: RepositoriesSummary = parse(file)
 
   console.log(`Loaded ${yaml.repositories.length} repositories`)
 
@@ -27,7 +27,7 @@ function loadRepositories() : Repositories[] {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<RepositoriesSummary>
 ) {
 
   res.status(200).json({

@@ -14,10 +14,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Header from './Header';
 import Footer from './Footer';
 
+interface LayoutProps {
+  children: React.ReactNode,
+  title?: string,
+}
+
 const Layout = ({
   children,
   title = 'SE577-App',
-}: Props) => (
+}: LayoutProps) => (
       <>
         <Header title={title} />
         <main>{children}</main>

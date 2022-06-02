@@ -17,18 +17,17 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-type HeaderProps = {
+type ACardProps = {
     title: string,
     description: string,
-
+    href: string,
 }
 
 const ACard = ({
-  children,
   title,
   description,
   href
-}: Props) : ReactElement => {
+}: ACardProps) : ReactElement => {
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >

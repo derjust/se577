@@ -19,7 +19,7 @@ function Copyright() {
   );
 }
 
-const Footer: ReactElement = () => {
+const Footer = () : ReactElement => {
     return (
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
