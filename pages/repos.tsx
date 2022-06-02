@@ -5,10 +5,32 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import RepositoryList from './components/RepoList'
+import ACard from '../src/components/ACard'
+
+import useSWR from 'swr'
+import fetch from '../src/fetch'
+
+
+interface RepositorySummary {
+  id: string,
+  name: string,
+  teaser: string,
+}
+
+interface RepositoriesSummary {
+  repositories: Array<RepositorySummary>
+}
+
 
 const Repositories: NextPage = () => {
+
+  const {data} = useSWR<RepositoriesSummary>('/api/repos', fetch)
+
+  if (!data) return (<CircularProgress />);
+
+
   return (<>
     <Box
       sx={{
@@ -34,7 +56,11 @@ const Repositories: NextPage = () => {
     </Box>
     <Container sx={{ py: 8 }} maxWidth="md">
 
-      <RepositoryList />
+      <Grid container spacing={4}>
+      {data.repositories.map((repo) => (
+        <ACard key={repo.id} title={repo.name} description={repo.teaser} href={'/repo/' + repo.id} />
+      ))}
+      </Grid>
 
     </Container>
     </>

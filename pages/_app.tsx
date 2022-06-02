@@ -5,8 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 
-import Layout from './components/Layout'
-
+import Layout from '../src/components/Layout'
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 

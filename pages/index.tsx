@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import Link from '../src/Link';
-import ACard from './components/ACard'
+import ACard from '../src/components/ACard'
 
 const Home: NextPage = () => {
   return (

@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import useSWR from 'swr'
-import fetch from '../../libs/fetch'
+import fetch from '../../src/fetch'
 
 interface RepositoryDetails {
   description: string,

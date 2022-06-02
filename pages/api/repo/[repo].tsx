@@ -39,7 +39,10 @@ export default function handler(
 
   const { repo } = req.query
 
-  const repoDetails = repos.get(repo);
+  // Query parameters can be specified multiple times
+  const repoName: string = Array.isArray(repo) ? repo[0] : repo;
+
+  const repoDetails = repos.get(repoName);
 
   if (repoDetails !== undefined) {
     res.status(200).json(repoDetails);

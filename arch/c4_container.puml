@@ -17,8 +17,8 @@ LAYOUT_WITH_LEGEND()
 
 Person(user, "Users", "People looking for repository information", $sprite="users")
 System_Boundary(c1, "SE577 System") {
-	Container(spa, "SPA", "Next.js", "The UI the users interact with", $sprite="react")
-	Container(api, "API", "nodejs", "Handles all backend logic", $sprite="nodejs")
+	Container(spa, "SPA", "Next.js", "The UI run in the Browser the users interact with", $sprite="react")
+	Container(api, "API", "nodejs", "Provides static pages and REST endpoints", $sprite="nodejs")
 	ContainerDb(db, "Database", "YAML", "Holds repository information", $sprite="file_alt")
 }
 

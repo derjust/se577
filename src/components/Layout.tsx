@@ -11,8 +11,8 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../../src/components/Header';
+import Footer from '../../src/components/Footer';
 
 interface LayoutProps {
   children: React.ReactNode,

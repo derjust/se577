@@ -1,6 +1,12 @@
 # Quick start
+## Makefile
+To build a Docker image of this application run `make build`
+To run it use `make run`
 
-## Build it
+`make all` exists to execute `build` & `run` together.
+
+## Manual
+### Build it
 
 To build a Docker image of this application run
 
@@ -8,7 +14,7 @@ To build a Docker image of this application run
 docker build -t se577 .
 ```
 
-## Run it
+### Run it
 
 Run it via
 
@@ -46,6 +52,19 @@ The components of the SPA and its backing NodeJS server can found in the followi
 
 ![](./arch/c4_component.png)
 
-For each page, the view and the corresponding controller can be found.
+Each page is pre-rendered during the build process.
+If a page has no runtime dynamic content (index, about, login) then the pure HTML page is kept
+and delivered to the Browser on request. This is ideal for adding a CDN in front of the
+(Docker) API container.
 
-Additionally, UI-related components are visualized as they represent the important part of the existing code base.
+Pages that feature (repos, repo) runtime dynamic are pre-rendered without the dynamic part.
+This allows the Browser to retrieve the basic HTML and cache it (or a CDN) and only
+the dynamic part is loaded on each request.
+
+This approach significantly improves the load time of the application and allows for future
+growth by using standard internet technologies like CDNs.
+
+One drawback (which is inherent to all SPA) is that SEO / crawlers still don't retrieve
+the dynamic content as these usually do not execute JavaScript. NextJS though provides
+facilities to provide so-called ['fallback data' allowing the initial HTML to contain some
+static content](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props#fetching-data-on-the-client-side) - which is replaced in the Browser with the refreshed data.
