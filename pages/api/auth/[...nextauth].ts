@@ -27,13 +27,7 @@ export default NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
-  // JSON Web tokens are only used for sessions if the `strategy: 'jwt'` session
-  // option is set - or by default if no database is specified.
-  // https://next-auth.js.org/configuration/options#jwt
-  jwt: {
-    // A secret to use for key generation (you should set this explicitly)
-    secret: process.env.SECRET,
-  },
+
 
   // Enable debug messages in the console if you are having problems
   debug: process.env.NODE_ENV != "production",

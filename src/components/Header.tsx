@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react"
 import React, { ReactElement } from "react";
 import Link from "../../src/Link";
 
@@ -16,33 +17,43 @@ type HeaderProps = {
 }
 
 const Header = ({ title } : HeaderProps ): ReactElement => {
-    return (
-      <Box sx={{ flexGrow: 1 }}>
+  const { data: session, status } = useSession()
+  let button;
+  debugger;
+  if (status === "authenticated") {
+    button = <Link color="inherit" href="/api/auth/signout" passHref>
+                <Button color="inherit">Logout</Button>
+              </Link>
+  } else {
+    button = <Link color="inherit" href="/api/auth/signin" passHref>
+                <Button color="inherit">Login</Button>
+              </Link>
+  }
 
-      <AppBar position="static">
-  <Toolbar variant="dense">
-  <Link color="inherit" href="/" passHref>
-  <IconButton
-    size="large"
-    edge="start"
-    color="inherit"
-    aria-label="menu"
-    sx={{ mr: 2 }}
-  >
-      <MenuIcon />
-    </IconButton>
+  return (
+    <Box sx={{ flexGrow: 1 }}>
 
-  </Link>
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-      {title}
-    </Typography>
-      <Link color="inherit" href="/login" passHref>
-        <Button color="inherit">Login</Button>
+    <AppBar position="static">
+      <Toolbar variant="dense">
+      <Link color="inherit" href="/" passHref>
+      <IconButton
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{ mr: 2 }}
+      >
+          <MenuIcon />
+        </IconButton>
       </Link>
-  </Toolbar>
-</AppBar>
-</Box>
-    );
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {title}
+        </Typography>
+          {button}
+      </Toolbar>
+    </AppBar>
+  </Box>
+  );
 };
 
 export default Header;

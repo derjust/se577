@@ -2,7 +2,6 @@
 
 TODO
 
-NEXTAUTH_URL=https://example.com
 
 init secret -> env
 
@@ -10,6 +9,13 @@ JWT token storage for session
 
 Use Node.js 12.22.0 or later
 
+Create app:
+![](arch/github-oauth.png)
+
+http://localhost:3000/api/auth/callback/github
+
+Otehrwise 
+NEXTAUTH_URL=https://example.com must be updated, too!
 
 
 ## Makefile
