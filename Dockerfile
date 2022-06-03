@@ -21,7 +21,7 @@ RUN yarn build
 FROM node:16-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV local
 # Next.js collects completely anonymous telemetry data about general usage.
 ENV NEXT_TELEMETRY_DISABLED 1
 
