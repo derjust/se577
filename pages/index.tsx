@@ -39,9 +39,11 @@ const Home: NextPage = () => {
       <Container sx={{ py: 8 }} maxWidth="md">
         <Grid container spacing={4}>
 
-          <ACard title="About me" description="Find in-depth information about me." href="/about" />
+          <ACard title="About me and you" description="Find public information about derjust and you" href="/about" />
 
-          <ACard title="Repositories" description="Find a list of all the repositories." href="/repos" />
+          <ACard title="Repositories" description="Find a list of all derjust's public repositories." href="/repos" />
+          
+          <ACard title="Gists" description="Show all YOUR gists - You must be signed in!" href="/gists" />
 
         </Grid>
       </Container>

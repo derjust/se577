@@ -9,7 +9,10 @@ JWT token storage for session
 
 Use Node.js 12.22.0 or later
 
+Gist page is "proteted" - so its prerendering is just the frame itself
+
 Create app:
+https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
 ![](arch/github-oauth.png)
 
 http://localhost:3000/api/auth/callback/github
@@ -17,6 +20,7 @@ http://localhost:3000/api/auth/callback/github
 Otehrwise 
 NEXTAUTH_URL=https://example.com must be updated, too!
 
+JWT - encrypted
 
 ## Makefile
 To build a Docker image of this application run `make build`
