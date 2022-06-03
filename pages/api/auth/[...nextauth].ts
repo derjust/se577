@@ -27,6 +27,28 @@ export default NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
+  callbacks: {
+    async jwt({ token, user, account }) {
+      // Initial sign in
+      if (account && user) {
+          // by default, the access_token is not provided back to the JWT
+        return {
+          accessToken: account.access_token,
+          user
+        }
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      const typesScriptTypeOfUserIsBroken:any = token.user;
+      session.user = typesScriptTypeOfUserIsBroken//token.user
+      session.accessToken = token.accessToken
+      session.error = token.error
+
+      return session
+    }
+  },
 
 
   // Enable debug messages in the console if you are having problems

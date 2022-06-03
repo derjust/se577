@@ -7,6 +7,7 @@ import type { NextPage } from 'next';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Image from 'next/image';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +22,12 @@ const Header = ({ title } : HeaderProps ): ReactElement => {
   let button;
   debugger;
   if (status === "authenticated") {
+    let avatar = <></>
+    if (session && session.user && session.user.image) {
+      avatar = <Image src={session.user.image} height="32" width="32" />
+    }
     button = <Link color="inherit" href="/api/auth/signout" passHref>
+                {avatar}
                 <Button color="inherit">Logout</Button>
               </Link>
   } else {
