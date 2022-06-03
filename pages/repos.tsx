@@ -8,15 +8,17 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import ACard from '../src/components/ACard'
+import Link from "../src/Link";
 
 import useSWR from 'swr'
 import fetch from '../src/fetch'
 
 
 interface RepositorySummary {
-  id: string,
+  id: number,
+  url: string,
   name: string,
-  teaser: string,
+  description: string,
 }
 
 interface RepositoriesSummary {
@@ -50,7 +52,7 @@ const Repositories: NextPage = () => {
           Repositories
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" paragraph>
-          All the repositories:
+          All the repositories of GitHub user <Link href="https://github.com/derjust/">derjust</Link>
         </Typography>
       </Container>
     </Box>
@@ -58,7 +60,7 @@ const Repositories: NextPage = () => {
 
       <Grid container spacing={4}>
       {data.repositories.map((repo) => (
-        <ACard key={repo.id} title={repo.name} description={repo.teaser} href={'/repo/' + repo.id} />
+        <ACard key={repo.id} title={repo.name} description={repo.description} href={repo.url} />
       ))}
       </Grid>
 

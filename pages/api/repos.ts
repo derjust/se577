@@ -2,35 +2,47 @@
 import fs from "fs"
 
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getSession } from "next-auth/react"
+import { Octokit } from "@octokit/core";
 import { parse, stringify } from 'yaml'
+import { resolvePtr } from "dns";
 
 interface RepositorySummary {
-  id: string,
-  description: string,
+  id: number,
+  url: string,
+  name: string,
+  description: string | null,
 }
 
 interface RepositoriesSummary {
   repositories: Array<RepositorySummary>
 }
 
-const repos = loadRepositories();
-
-function loadRepositories() : RepositorySummary[] {
-  const file = fs.readFileSync('./repos.yml', 'utf8')
-  const yaml: RepositoriesSummary = parse(file)
-
-  console.log(`Loaded ${yaml.repositories.length} repositories`)
-
-  return yaml.repositories
-}
-
-
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<RepositoriesSummary>
 ) {
 
-  res.status(200).json({
-    repositories: repos
-  });
+  const session = await getSession({ req })
+  
+  const octokit = new Octokit(
+    // no authentication here - just showing the public repos
+  );
+
+  const { page } = req.query
+  //pagination  
+  const response = await octokit.request('GET /users/{username}/repos', {username: "derjust"})
+
+  const payload = response.data.map(repo => {
+    const x: RepositorySummary = {
+         id: repo.id,
+         url: repo.html_url,
+         name: repo.name,
+         description: repo.description
+    }
+    return x;
+});
+
+  res.status(200).json({repositories: payload});
 }
+
