@@ -19,10 +19,16 @@ Person(user, "Users", "People looking for repository information", $sprite="user
 System_Boundary(c1, "SE577 System") {
 	Container(spa, "SPA", "Next.js", "The UI run in the Browser the users interact with", $sprite="react")
 	Container(api, "API", "nodejs", "Provides static pages and REST endpoints", $sprite="nodejs")
-	ContainerDb(db, "Database", "YAML", "Holds repository information", $sprite="file_alt")
+System_Boundary(c2, "GitHub") {
+	ContainerDb_Ext(db, "GitHub", "GitHub REST API", "Holds repository and Gist information", $sprite="github")
+	ContainerDb_Ext(auth, "GitHub", "OAuth Authorization server", "Authenticates user for REST API calls", $sprite="github")
+
 }
 
 Rel(user, spa, "Uses", "http")
 Rel(spa, api, "Uses", "http")
-Rel_L(db, api, "Reads")
+Rel_L(db, api, "Reads", "REST")
+Rel_L(api, auth, "Authenticate", "OAuth flow")
+
+Lay_D(db, auth)
 @enduml

@@ -17,8 +17,9 @@ LAYOUT_WITH_LEGEND()
 
 Person(user, "Users", "People looking for repository information", $sprite="users")
 System(c1, "SE577 System", "Provide repository information")
-SystemDb(c2, "YAML", "Holds repository information", $sprite="file_alt")
+SystemDb_Ext(c2, "GitHub", "Holds repository and Gist information", $sprite="github")
 
 Rel(user, c1, "Uses", "http")
-Rel_L(c2, c1, "Reads", "File")
+Rel_L(c2, c1, "Reads", "REST")
+Rel_L(c1, c2, "Authenticate", "OAuth flow")
 @enduml

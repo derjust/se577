@@ -23,20 +23,23 @@ Container_Boundary(spa, "SE577 System - HTML") {
 	Component(layout, "Layout", "../src/component/Layout.tsx", "Provides basic UI layout", $sprite="react")
 	Component(header, "Header", "../src/component/Layout.tsx", "Provides the header UI components", $sprite="react")
 	Component(footer, "Footer", "../src/component/Layout.tsx", "Provides the footer UI components", $sprite="react")
-	Component(loginView, "Login page", "./login", "Provides basic UI layout", $sprite="html5")
-	Component(indexView, "Index page", "./index", "Login page", $sprite="html5")
-	Component(aboutView, "About page", "./about", "Simple about page", $sprite="html5")
+	Component(loginView, "Login page", "./login", "Provides basic UI layout", $sprite="react")
+	Component(indexView, "Index page", "./index", "Login page", $sprite="react")
+	Component(aboutView, "About page", "./about", "Simple about page", $sprite="react")
 	Component(reposView, "Repositories view", "./repos.tsx", "List of all repositories", $sprite="react")
-	Component(repoComponent, "Single Repository Card", "../src/component/ACard.tsx", "Single repository UI component", $sprite="react")
-	Component(repoView, "Repository view", "./repo/[repo].tsx", "Shows a single repository", $sprite="react")
+	Component(cardComponent, "Single Card", "../src/component/ACard.tsx", "UI card component", $sprite="react")
+	Component(gistsView, "Gists view", "./gists.tsx", "Shows the usere's Gists", $sprite="react")
 
 }
 
 Container_Boundary(nodejs, "SE577 System - API") {
-	Component(reposController, "Repositories contrtoller", "./repos.tsx", "Repositories controller", $sprite="nodejs")
-	Component(repoController, "Repository contrtoller", "./repo/[repo].tsx", "Repository controller", $sprite="nodejs")
+	Component(reposController, "Repositories contrtoller", "./api/repos.ts", "Repositories controller", $sprite="nodejs")
+	Component(gistsController, "Gists contrtoller", "./api/gists.ts", "Gists controller", $sprite="nodejs")
+}
 
-	ContainerDb(db, "Database file", "YAML", "Holds mocked repository information", $sprite="file_alt")
+Container_Boundary(gh, "GitHub System") {
+	ContainerDb_Ext(db, "GitHub", "GitHub REST API", "Holds repository and Gist information", $sprite="github")
+	ContainerDb_Ext(auth, "GitHub", "OAuth Authorization server", "Authenticates user for REST API calls", $sprite="github")
 }
 
 
@@ -47,22 +50,23 @@ Rel_L(layout, header, "Uses")
 Rel(layout, indexView, "Uses")
 Rel(layout, loginView, "Uses")
 Rel(layout, aboutView, "Uses")
-Rel(layout, repoView, "Uses")
+Rel(layout, gistsView, "Uses")
 Rel(layout, reposView, "Uses")
-Rel_R(reposView, repoComponent, "Uses")
-
-Lay_R(indexView, loginView)
-Lay_R(loginView, aboutView)
-Lay_R(aboutView, repoView)
-Lay_R(repoView, reposView)
+Rel_U(reposView, cardComponent, "Uses")
+Rel_U(gistsView, cardComponent, "Uses")
 
 
-Rel_U(reposController, reposView, "Enriches", "ajax")
-Rel_U(repoController, repoView, "Enriches", "ajax")
-Rel_D(reposController, db, "Reads")
-Rel_D(repoController, db, "Reads")
 
-Lay_R(repoController, reposController)
+Rel_D(reposView, reposController, "Enriches", "REST")
+Rel_D(gistsView, gistsController, "Enriches", "REST")
+Rel_R(reposController, db, "Reads", "REST")
+Rel_R(gistsController, db, "Reads", "REST")
+
+Rel_D(aboutView, db, "Reads", "REST")
+Rel_D(loginView, auth, "OAuth flow")
 
 Lay_D(spa, nodejs)
+Lay_R(reposController, gistsController)
+Lay_D(nodejs, gh)
+
 @enduml
