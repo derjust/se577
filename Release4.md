@@ -1,26 +1,40 @@
 # Quick start
 
-TODO
+## Description
+
+A simple web app build with NextJS (Using Node.js 12.22.0 or later).
+A "FrontEnd" for the GitHub API showing the users repositories and comparing
+the current user with the GitHub user `derjust`.
+
+GitHub is also used as OAuth authentication server.
+
+### (Un)authorized button
+The two buttons exist on the 'about me and you' page at `/about`.
+A login is required for the `Authenticated` button (it is rendered in **red** if the user is not logged in & the call will fail if still executed)
 
 
-init secret -> env
+This is just to show the distinction between the GitHub integration on the frontend calling its API directly.
 
-JWT token storage for session
+### GitHub integration
 
-Use Node.js 12.22.0 or later
+The Gists at `/gists` page shows the user's Gists - and requries the user to be logged in.
+The Repos page at `/repos` shows the repositories of the user [`derjust`](https://github.com/derjust) - a login by the user is not required
 
-Gist page is "proteted" - so its prerendering is just the frame itself
+This is just to show the distinction between the GitHub integration on the Backend.
 
-Create app:
-https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
+## Build
+
+### Preparation
+
+Create a [GitHub OAuth App](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) with the following settings.
 ![](arch/github-oauth.png)
 
-http://localhost:3000/api/auth/callback/github
+**Note:** If the web app is hosted somwhere else, you must update the callback URL accordingly:
+* http://localhost:3000/api/auth/callback/github and _also_ set
+* NEXTAUTH_URL=https://example.com in `.env.local`!
 
-Otehrwise 
-NEXTAUTH_URL=https://example.com must be updated, too!
-
-JWT - encrypted
+A `.env.local` file must be created and the properties from the created GitHub OAuth app must be set in it.
+You can use `env.local.example` as a template. This can also be accomplished by running `make init` once.
 
 ## Makefile
 To build a Docker image of this application run `make build`
@@ -45,10 +59,23 @@ Run it via
 docker run -p 3000:3000 se577
 ```
 
-and open http://localhost:3000/ in your browser.
+and open `http://localhost:3000/` in your browser.
 
 
 # Architecture
+
+## OAuth reflection
+
+init secret -> env
+
+JWT token storage for session
+
+
+
+JWT - encrypted
+
+
+describe your thoughts and experiences with using oAuth and tokens to integrate with github.
 
 ## C4-Context
 
@@ -80,7 +107,7 @@ If a page has no runtime dynamic content (index, about, login) then the pure HTM
 and delivered to the Browser on request. This is ideal for adding a CDN in front of the
 (Docker) API container.
 
-Pages that feature (repos, repo) runtime dynamic are pre-rendered without the dynamic part.
+Pages that feature (repos, gists) runtime dynamic are pre-rendered without the dynamic part.
 This allows the Browser to retrieve the basic HTML and cache it (or a CDN) and only
 the dynamic part is loaded on each request.
 
