@@ -14,7 +14,7 @@ help:
 build:
 	    @docker build -t ${IMAGEFULLNAME} .
 
-push:
+run:
 	    @docker run -p 3000:3000 ${IMAGEFULLNAME}
 
 all: build run
