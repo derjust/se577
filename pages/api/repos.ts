@@ -1,6 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import fs from "fs"
-
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/react"
 import { Octokit } from "@octokit/core";
@@ -28,17 +26,16 @@ export default async function handler(
   );
 
   const { page } = req.query
-  //pagination  
   const response = await octokit.request('GET /users/{username}/repos', {username: "derjust"})
 
   const payload = response.data.map(repo => {
-    const x: RepositorySummary = {
+    const summary: RepositorySummary = {
          id: repo.id,
          url: repo.html_url,
          name: repo.name,
          description: repo.description
     }
-    return x;
+    return summary;
 });
 
   res.status(200).json({repositories: payload});

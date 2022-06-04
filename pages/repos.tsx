@@ -60,7 +60,7 @@ const Repositories: NextPage = () => {
 
       <Grid container spacing={4}>
       {data.repositories.map((repo) => (
-        <ACard key={repo.id} title={repo.name} description={repo.description} href={repo.url} />
+        <ACard key={repo.id} title={repo.name} description={repo.description} href={`/repo/${repo.name}`} />
       ))}
       </Grid>
 
