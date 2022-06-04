@@ -66,16 +66,26 @@ and open `http://localhost:3000/` in your browser.
 
 ## OAuth reflection
 
-init secret -> env
+OAuth at this point is the go-to solution for authentication and service authorization in a distributed web:
+It definies clear roles and responsibilities for the participants in the flow.
+It especially allows for a services A used by user to give permissions to service B on behalf of the user - but the user
+stays in control: At any point in time, the access to service A from service B can be revoked by the user.
+This and the concept of scopes allows for fine grained control without the need for a user to share his/her passwords form one service to another.
 
-JWT token storage for session
+On top, token rotation exists for extended securities. All in all this makes OAuth not impacted by the usual leaks (and in general weak passwords) that are used by humans.
+
+While the flow is reasonably simple to follow, it remains a somewhat complex technology as it uses the full stack of the web (HTTP for transport, TLS for transport encryption, cookies/JSON/Base64 for storage) resulting in a lot of moving parts during an authentication flow.
+Though as soon as the authentication is done (once), the usage afterwards boils down to handling a classic authentication token (via the `Authorization` header).
+
+Thanks to being an RFC standard, there have emerged a lot of tooling support and libraries to enable OAuth for all frameworks and languages making it's usage straight forward.
+
+It is worth pointing out that OAuth only addresses the communication and trust between the three parties (user, service A, service B). It is 'out of scope' on how to deal with the actual access token from OAuths perspective.
 
 
+For this web app I used JWT tokens as it eases the usage: No backend data storage is needed: The session is persisted in the JWT cookie and (signed) sent to the client.
+On every request, the cookie (and thus the session) is passed back to the backend and can be used (after verification of the signature).
 
-JWT - encrypted
-
-
-describe your thoughts and experiences with using oAuth and tokens to integrate with github.
+The drawback is a slight performance impact as the session storage effectdively is the cookie itself resulting in more data being transmitted between the browser and the backend on every request.
 
 ## C4-Context
 
