@@ -20,11 +20,10 @@ type HeaderProps = {
 const Header = ({ title } : HeaderProps ): ReactElement => {
   const { data: session, status } = useSession()
   let button;
-  debugger;
   if (status === "authenticated") {
     let avatar = <></>
     if (session && session.user && session.user.image) {
-      avatar = <Image src={session.user.image} height="32" width="32" />
+      avatar = <Image src={session.user.image} height="32" width="32" alt="" />
     }
     button = <Link color="inherit" href="/api/auth/signout" passHref>
                 {avatar}

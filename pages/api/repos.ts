@@ -4,8 +4,6 @@ import fs from "fs"
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/react"
 import { Octokit } from "@octokit/core";
-import { parse, stringify } from 'yaml'
-import { resolvePtr } from "dns";
 
 interface RepositorySummary {
   id: number,

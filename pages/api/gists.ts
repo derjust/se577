@@ -4,8 +4,6 @@ import fs from "fs"
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/react"
 import { Octokit } from "@octokit/core";
-import { parse, stringify } from 'yaml'
-import { endianness } from "os";
 
 interface GistDetail {
     id: string
@@ -27,14 +25,13 @@ export default async function handler(
     res.status(401).end();
     return;
   }
-  const accessToken = session.accessToken;
+
   const octokit = new Octokit({ auth: session.accessToken });
 
   const { page } = req.query
   //pagination  
   const response = await octokit.request('GET /gists', {})
 
-console.log(JSON.stringify(response.data))
 
   const payload = response.data.map(gist => {
     const x: GistDetail = {
