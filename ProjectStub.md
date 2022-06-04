@@ -1,6 +1,20 @@
 # Architecture
 
-## C4-Context
+## Quality factors
+
+//TODO
+
+### Performance 
+
+https://github.com/milliHQ/terraform-aws-next-js
+https://milli.is/blog/why-we-self-host-our-serverless-next-js-site-on-aws-with-terraform
+
+
+## Models
+
+To get an overview, please see the following C4 models:
+
+### C4-Context
 
 The overall context of the SE577 application is depicted below:
 It shows a current state in which the SE477 system is integrated with a YAML file as data store.
@@ -9,7 +23,7 @@ It shows a current state in which the SE477 system is integrated with a YAML fil
 
 At this time, the focus is on the SE577 itself. No external system has been integrated.
 
-## C4-Container
+### C4-Container
 
 The SE577 system can be understood as a client-server application using a Single-Page-Application (SPA) deployment:
 
@@ -19,12 +33,25 @@ The SPA is realized with [Next.js](https://nextjs.org/), a React-based Framework
 
 For decoration purposes, [MaterialUI v4](https://v4.mui.com/) is used.
 
-## C4-Component
+### C4-Component
 
 The components of the SPA and its backing NodeJS server can found in the following concrete architecture:
 
 ![](./arch/c4_component.png)
 
-For each page, the view and the corresponding controller can be found.
+Each page is pre-rendered during the build process.
+If a page has no runtime dynamic content (index, about, login) then the pure HTML page is kept
+and delivered to the Browser on request. This is ideal for adding a CDN in front of the
+(Docker) API container.
 
-Additionally, UI-related components are visualized as they represent the important part of the existing code base.
+Pages that feature (repos, gists) runtime dynamic are pre-rendered without the dynamic part.
+This allows the Browser to retrieve the basic HTML and cache it (or a CDN) and only
+the dynamic part is loaded on each request.
+
+This approach significantly improves the load time of the application and allows for future
+growth by using standard internet technologies like CDNs.
+
+One drawback (which is inherent to all SPA) is that SEO / crawlers still don't retrieve
+the dynamic content as these usually do not execute JavaScript. NextJS though provides
+facilities to provide so-called ['fallback data' allowing the initial HTML to contain some
+static content](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props#fetching-data-on-the-client-side) - which is replaced in the Browser with the refreshed data.
