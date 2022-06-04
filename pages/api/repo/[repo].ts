@@ -13,6 +13,43 @@ interface RepositoriyTimeline {
   events: Array<RepositoriyTimelineEvent>
 }
 
+/**
+ * @swagger
+ * /api/repo/{repo}:
+ *   get:
+ *     summary: Returns repository timeline
+ *     parameters:
+ *       - in: path
+ *         name: repo
+ *         type: string
+ *         required: true
+ *         description: repository name
+ *     responses:
+ *       400:
+ *         description: Required input paramters are missing
+ *       200:
+ *         description: Returns the repository timeline
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 events:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       url:
+ *                         type: string
+ *                         format: uri
+ *                       timestamp:
+ *                         type: string
+ *                         format: date-time
+ *                       title:
+ *                         type: string
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<RepositoriyTimeline>

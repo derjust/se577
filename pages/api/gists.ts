@@ -15,6 +15,32 @@ interface GistDetails {
     gists: Array<GistDetail>
 }
 
+/**
+ * @swagger
+ * /api/gists:
+ *   get:
+ *     summary: Returns private gists
+ *     responses:
+ *       200:
+ *         description: Returns the private gists of the logged in user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 gists:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       filesCount:
+ *                         type: integer
+ *                         minimum: 0
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GistDetails>

@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from "next-auth/react"
 import { Octokit } from "@octokit/core";
 
 interface RepositorySummary {
@@ -14,12 +13,41 @@ interface RepositoriesSummary {
   repositories: Array<RepositorySummary>
 }
 
+/**
+ * @swagger
+ * /api/repos:
+ *   get:
+ *     summary: Returns public repositories of user derjust
+ *     responses:
+ *       200:
+ *         description: Returns the repositories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 repositories:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: technical ID of the repository
+ *                       url:
+ *                         type: string
+ *                         format: uri
+ *                       name:
+ *                         type: string
+ *                         description: name of the repository
+ *                       description:
+ *                         type: string
+ *                         description: description of the repository provided by the author
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<RepositoriesSummary>
 ) {
-
-  const session = await getSession({ req })
   
   const octokit = new Octokit(
     // no authentication here - just showing the public repos

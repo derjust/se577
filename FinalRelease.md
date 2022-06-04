@@ -10,10 +10,18 @@ GitHub is also used as OAuth authentication server.
 
 ### New Functionality
 
+#### Timeline view
+
 A new "historical view" for repositories was added since the `proj-Release-4`.
 
 Opening the repositories overview `/repos` and clicking on a given repoository doesn't link to GtiHub directly anymore but opens a timeline of commits
 to the default branch of that repository. From this historical view there are mulitple ways to jump into the GitHub website itself.
+
+#### OpenAPI
+
+All API endpoints are self-documenting via the OpenAPI spec under `/api/docs`
+
+A SwaggerUI is available at `/api-doc` (ie. [http://localhost:3000/api-doc](http://localhost:3000/api-doc))
 
 ### Existing Functionality
 
