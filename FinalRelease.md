@@ -39,6 +39,16 @@ The Repos page at `/repos` shows the repositories of the user [`derjust`](https:
 
 This is just to show the distinction between the GitHub integration on the Backend.
 
+## Getting Started
+
+Run `npm install` once to install all needed dependencies. Node 12+ is required!
+
+Afterwards, run the development server:
+
+```bash
+yarn dev
+```
+
 ## Build
 
 ### Preparation
