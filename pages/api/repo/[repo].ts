@@ -1,12 +1,11 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Octokit } from "@octokit/core";
 
 interface RepositoriyTimelineEvent {
-  id: string,
+  sha: string,
   url: string,
-  timestamp: string,
-  title: string,
+  timestamp: string | undefined,
+  message: string,
 }
 
 interface RepositoriyTimeline {
@@ -39,7 +38,7 @@ interface RepositoriyTimeline {
  *                   items:
  *                     type: object
  *                     properties:
- *                       id:
+ *                       sha:
  *                         type: string
  *                       url:
  *                         type: string
@@ -47,7 +46,7 @@ interface RepositoriyTimeline {
  *                       timestamp:
  *                         type: string
  *                         format: date-time
- *                       title:
+ *                       message:
  *                         type: string
  */
 export default async function handler(
@@ -59,31 +58,28 @@ export default async function handler(
     // no authentication here - just showing the public repos
   );
 
-  const { repo, page } = req.query
+  const { repo } = req.query
   if (!repo) {
     res.status(400).end();
     return
   }
   const repoName: string = Array.isArray(repo) ? repo[0] : repo;
 
-  const response = await octokit.request('GET /users/{username}/repos', {username: "derjust"})
-
-  await octokit.request('GET /repos/{owner}/{repo}/commits', {
+  const response = await octokit.request('GET /repos/{owner}/{repo}/commits?sha={sha}', {
     owner: 'derjust',
-    repo: repoName
+    repo: repoName,
   })
 
 
-  const payload = response.data.map(repo => {
+  const payload = response.data.map((commit: { sha: any; html_url: any; commit: { author: { date: any; }; message: any; }; }) => {
     const evt: RepositoriyTimelineEvent = {
-         id: "",
-         url: "",
-         timestamp: "",
-         title: "",
+         sha: commit.sha,
+         url: commit.html_url,
+         timestamp: commit.commit.author?.date ,
+         message: commit.commit.message,
     }
     return evt;
 });
 
   res.status(200).json({events: payload});
 }
-

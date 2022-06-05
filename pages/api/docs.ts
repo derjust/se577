@@ -4,8 +4,8 @@ const swaggerHandler = withSwagger({
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'NextJS Swagger',
-      version: '0.1.0',
+      title: 'SE577',
+      version: '1.0.0',
     },
   },
   apiFolder: 'pages/api',

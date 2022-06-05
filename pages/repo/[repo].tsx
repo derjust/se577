@@ -1,63 +1,40 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
+import React, {useState } from "react";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-
-import Link from "../../src/Link";
+import RepositoryTimelineComponent from "../../src/components/RepositoryTimelineComponent"
+import Link from "../../src/Link"
 import useSWR from 'swr'
 import fetch from '../../src/fetch'
 
-interface RepositoryTimeline {
-  events: Array<any>
+interface RepositoriyTimelineEvent {
+  sha: string,
+  url: string,
+  timestamp: string | undefined,
+  message: string,
 }
 
+interface RepositoryTimeline {
+  events: Array<RepositoriyTimelineEvent>
+}
 
 const RepositoryTime: NextPage = () => {
   const router = useRouter()
   const { repo } = router.query
+  const { data } = useSWR<RepositoryTimeline>(`/api/repo/${repo}`, fetch)
 
-  const {data} = useSWR<RepositoryTimeline>(`/api/repo/${repo}`, fetch)
+  let timeline;
+  if (!data) {
+    timeline = <CircularProgress />
+  } else {
+    timeline = <RepositoryTimelineComponent events={data.events} />
+  }
 
-  let timeline = <></>
-  //if (!data) {
-  //  timeline = <CircularProgress />
-  //}
-
-  timeline = <Timeline>
-  <TimelineItem>
-    <TimelineSeparator>
-      <TimelineDot />
-      <TimelineConnector />
-    </TimelineSeparator>
-    <TimelineContent>Eat</TimelineContent>
-  </TimelineItem>
-  <TimelineItem>
-    <TimelineSeparator>
-      <TimelineDot />
-      <TimelineConnector />
-    </TimelineSeparator>
-    <TimelineContent>Code</TimelineContent>
-  </TimelineItem>
-  <TimelineItem>
-    <TimelineSeparator>
-      <TimelineDot />
-    </TimelineSeparator>
-    <TimelineContent>Sleep</TimelineContent>
-    <TimelineContent>Sleep2</TimelineContent>
-  </TimelineItem>
-</Timeline>
 
 
   return (<>

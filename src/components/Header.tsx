@@ -2,8 +2,6 @@ import { useSession } from "next-auth/react"
 import React, { ReactElement } from "react";
 import Link from "../../src/Link";
 
-import type { NextPage } from 'next';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

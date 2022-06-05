@@ -4,10 +4,8 @@ import { NextPage } from 'next'
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import Link from '../src/Link';
 import ACard from '../src/components/ACard'
 
 const Home: NextPage = () => {

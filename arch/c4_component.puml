@@ -27,6 +27,7 @@ Container_Boundary(spa, "SE577 System - HTML") {
 	Component(indexView, "Index page", "./index", "Login page", $sprite="react")
 	Component(aboutView, "About page", "./about", "Simple about page", $sprite="react")
 	Component(reposView, "Repositories view", "./repos.tsx", "List of all repositories", $sprite="react")
+	Component(repoView, "Repository timeline view", "./repo/[repo].tsx", "Repository timeline view", $sprite="react")
 	Component(cardComponent, "Single Card", "../src/component/ACard.tsx", "UI card component", $sprite="react")
 	Component(gistsView, "Gists view", "./gists.tsx", "Shows the usere's Gists", $sprite="react")
 
@@ -34,6 +35,7 @@ Container_Boundary(spa, "SE577 System - HTML") {
 
 Container_Boundary(nodejs, "SE577 System - API") {
 	Component(reposController, "Repositories contrtoller", "./api/repos.ts", "Repositories controller", $sprite="nodejs")
+	Component(repoController, "Repository timeline contrtoller", "./api/repo/[repo].ts", "Repository timeline controller", $sprite="nodejs")
 	Component(gistsController, "Gists contrtoller", "./api/gists.ts", "Gists controller", $sprite="nodejs")
 }
 
@@ -52,20 +54,29 @@ Rel(layout, loginView, "Uses")
 Rel(layout, aboutView, "Uses")
 Rel(layout, gistsView, "Uses")
 Rel(layout, reposView, "Uses")
+Rel(layout, repoView, "Uses")
 Rel_U(reposView, cardComponent, "Uses")
 Rel_U(gistsView, cardComponent, "Uses")
 
 
-
+Rel_D(repoView, repoController, "Enriches", "REST")
 Rel_D(reposView, reposController, "Enriches", "REST")
 Rel_D(gistsView, gistsController, "Enriches", "REST")
-Rel_R(reposController, db, "Reads", "REST")
-Rel_R(gistsController, db, "Reads", "REST")
+Rel_D(reposController, db, "Reads", "REST")
+Rel_D(gistsController, db, "Reads", "REST")
+Rel_D(repoController, db, "Reads", "REST")
 
 Rel_D(aboutView, db, "Reads", "REST")
 Rel_D(loginView, auth, "OAuth flow")
 
+Lay_R(loginView, aboutView)
+Lay_R(aboutView, repoView)
+Lay_R(repoView, gistsView)
+Lay_R(gistsView, reposView)
+
+
 Lay_D(spa, nodejs)
+Lay_R(repoController, gistsController)
 Lay_R(reposController, gistsController)
 Lay_D(nodejs, gh)
 

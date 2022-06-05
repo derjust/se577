@@ -1,6 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import fs from "fs"
-
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/react"
 import { Octokit } from "@octokit/core";
@@ -55,17 +52,15 @@ export default async function handler(
   const octokit = new Octokit({ auth: session.accessToken });
 
   const { page } = req.query
-  //pagination  
   const response = await octokit.request('GET /gists', {})
 
-
   const payload = response.data.map(gist => {
-    const x: GistDetail = {
+    const gistDetail: GistDetail = {
          id: gist.id,
          description: gist.description,
          filesCount: Object.keys(gist.files).length
     }
-    return x;
+    return gistDetail;
 });
 
   res.status(200).json({gists: payload});

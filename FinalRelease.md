@@ -47,6 +47,7 @@ Create a [GitHub OAuth App](https://docs.github.com/en/developers/apps/building-
 ![](arch/github-oauth.png)
 
 **Note:** If the web app is hosted somwhere else, you must update the callback URL accordingly:
+
 * http://localhost:3000/api/auth/callback/github and _also_ set
 * NEXTAUTH_URL=https://example.com in `.env.local`!
 
@@ -54,12 +55,16 @@ A `.env.local` file must be created and the properties from the created GitHub O
 You can use `env.local.example` as a template. This can also be accomplished by running `make init` once.
 
 ## Makefile
-To build a Docker image of this application run `make build`
-To run it use `make run`
 
-`make all` exists to execute `build` & `run` together.
+1. To build a Docker image of this application run `make build`
+2. To run it use `make run`
+
+Also `make all` exists to execute `build` & `run` together.
 
 ## Manual
+
+Instead of the `Makefile`, all commands can be steps manually, too 
+
 ### Build it
 
 To build a Docker image of this application run
@@ -80,4 +85,4 @@ and open `http://localhost:3000/` in your browser.
 
 ## Architecture
 
-Please find detailed architecture description in th [ProjectStub.md](./ProjectStub.md)
+Please find detailed architecture description in th [ProjectStructure.md](./ProjectStructure.md)
